@@ -358,27 +358,43 @@
         <i class="fas fa-play"></i> <!-- Icon Play -->
     </button>
 
-    <script>
-        const audio = document.getElementById("audio");
-        const playPauseButton = document.getElementById("play-pause");
-        const bukaButton = document.getElementById("buka");
+<script>
+    const audio = document.getElementById("audio");
+    const playPauseButton = document.getElementById("play-pause");
+    const bukaButton = document.getElementById("buka");
 
-        // Saat tombol "Buka Undangan" diklik, mulai pemutaran audio otomatis
-        playPauseButton.addEventListener("click", function () {
-            if (audio.paused) {
-                audio.play();
-                playPauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Mengganti ikon ke Pause
-            } else {
-                audio.pause();
-                playPauseButton.innerHTML = '<i class="fas fa-play"></i>'; // Mengganti ikon ke Play
-            }
-        });
-
-        // Jika audio selesai, kembalikan ikon ke Play
-        audio.addEventListener("ended", function () {
+// Fungsi untuk memutar atau menghentikan audio
+    function toggleAudio() {
+        if (audio.paused) {
+            audio.play().then(() => {
+                playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+            }).catch((error) => {
+                console.error("Error while playing audio:", error);
+            });
+        } else {
+            audio.pause();
+            // Menghapus pengaturan waktu ke awal
             playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
-        });
-    </script>
+        }
+    }
+
+// Saat tombol "Buka Undangan" diklik, memutar atau menghentikan audio
+    bukaButton.addEventListener("click", function () {
+        toggleAudio();
+    });
+
+// Jika audio selesai, kembalikan ikon ke Play
+    audio.addEventListener("ended", function () {
+        playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+    });
+
+// Saat tombol play/pause diklik, memutar atau menghentikan audio
+    playPauseButton.addEventListener("click", function () {
+        toggleAudio();
+    });
+
+
+</script>
 
 <script>
     document.getElementById('buka').addEventListener('click', () => {
